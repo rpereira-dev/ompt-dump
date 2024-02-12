@@ -1,2 +1,7 @@
-# Prerequisities
-- An installation of taskgrind in the environment (TODO: checking it as part of the cmake file)
+# Installation
+```
+mkdir build
+cd build
+CC=clang cmake ../
+export OMP_TOOL_LIBRARIES=$(realpath libompt_dump.so)
+```
