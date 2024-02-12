@@ -1,26 +1,30 @@
 # include <assert.h>
-# include <bfd.h>
 # include <omp.h>
 # include <ompt.h>
 # include <stdio.h>
-# include <string.h>
+# include <stdatomic.h>
 
 # define TOOL_NAME "OMPT_DUMP"
+
+static volatile int mtx = 0;
+
+# define INFO(...)                                                  \
+    do {                                                            \
+        int zero = 0;                                               \
+        while (__sync_val_compare_and_swap(&mtx, zero, 1) == 1);    \
+        fprintf(stdout, "[OMPT] [INFO] ");                          \
+        fprintf(stdout, __VA_ARGS__);                               \
+        fprintf(stdout, "\n");                                      \
+        __sync_fetch_and_xor(&mtx, mtx);                            \
+    } while (0)
 
 # define register_callback_t(name, type)                                            \
     do {                                                                            \
         type f_##name = &on_##name;                                                 \
         if (ompt_set_callback(name, (ompt_callback_t)f_##name) == ompt_set_never)   \
-            printf("0: Could not register callback '" #name "'\n");                 \
+            INFO("Could not register callback '" #name "'");                        \
     } while(0)
 # define register_callback(name) register_callback_t(name, name##_t)
-
-# define INFO(...)                          \
-    do {                                    \
-        fprintf(stdout, "[OMPT] [INFO] ");  \
-        fprintf(stdout, __VA_ARGS__);       \
-        fprintf(stdout, "\n");              \
-    } while (0)
 
 # include "callback-impl.h"
 

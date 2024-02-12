@@ -2,16 +2,16 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project name
-project(taskgrind_omp)
+project(ompt_dump)
 
 # Lib name
-add_library(taskgrind_omp SHARED src/tool.c)
+add_library(ompt_dump SHARED src/tool.c)
 
 # Include directory
 include_directories(include)
 
 # Installation
-INSTALL(TARGETS taskgrind_omp LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+INSTALL(TARGETS ompt_dump LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include FILES_MATCHING PATTERN "*.h*")
 
 # Tests
