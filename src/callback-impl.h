@@ -23,7 +23,7 @@ void on_ompt_callback_dispatch(ompt_data_t *parallel_data, ompt_data_t *task_dat
 }
 
 void on_ompt_callback_task_create(ompt_data_t *encountering_task_data, const ompt_frame_t *encountering_task_frame, ompt_data_t *new_task_data, int flags, int has_dependences, const void *codeptr_ra) {
-    INFO("ompt_callback_task_create");
+    INFO("ompt_callback_task_create(encountering_task_data=%p, new_task_data=%p)", encountering_task_data, new_task_data);
 }
 
 void on_ompt_callback_dependences(ompt_data_t *task_data, const ompt_dependence_t *deps, int ndeps) {
@@ -35,11 +35,11 @@ void on_ompt_callback_task_dependence(ompt_data_t *src_task_data, ompt_data_t *s
 }
 
 void on_ompt_callback_task_schedule(ompt_data_t *prior_task_data, ompt_task_status_t prior_task_status, ompt_data_t *next_task_data) {
-    INFO("ompt_callback_task_schedule");
+    INFO("ompt_callback_task_schedule(prior_task_data=%p, prior_task_status=%d, next_task_data=%p)", prior_task_data, prior_task_status, next_task_data);
 }
 
 void on_ompt_callback_implicit_task(ompt_scope_endpoint_t endpoint, ompt_data_t *parallel_data, ompt_data_t *task_data, unsigned int actual_parallelism, unsigned int index, int flags) {
-    INFO("ompt_callback_implicit_task");
+    INFO("ompt_callback_implicit_task(task_data=%p)", task_data);
 }
 
 void on_ompt_callback_masked(ompt_scope_endpoint_t endpoint, ompt_data_t *parallel_data, ompt_data_t *task_data, const void *codeptr_ra) {
